@@ -1,0 +1,99 @@
+/* Given below is Google-Font CDN link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800;900&display=swap');
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins',sans-serif;
+}
+/*
+body{
+   min-height: 100vh;
+   background-repeat: no-repeat;
+   background-size: cover;
+    background-color: white;
+   backdrop-filter: brightness(100%);
+}
+ */
+nav{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    background: #9567e0;
+}
+nav #logo{
+    color: #fff;
+    font-size: 3em;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 2px;
+    margin: auto 0;
+}
+ul{
+    display: flex;
+    list-style: none;
+    margin: auto 0;
+}
+ul li a{
+    position: relative;
+    display: block;
+    font-size: 1.5em;
+    padding: 25px 45px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+ul li a::before{
+    position: absolute;
+    content: '';
+    height: 4px;
+    width: 0%;
+    background-color: #fff;
+    left: 0;
+    bottom: 0;
+    transition: 0.3s ease;
+}
+ul li:hover a::before{
+    width: 100%;
+}
+ul li:hover a{
+    background-color: rgba(255,255,255,0.2);
+    text-decoration: none;
+    color: white;
+}
+
+/* Стилі для випадаючого списку */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #9567e0;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    min-width: 200px;
+}
+
+.dropdown-content li {
+    padding: 0;
+}
+
+.dropdown-content li a {
+    padding: 15px;
+    font-size: 1.2em;
+    display: block;
+    text-align: left;
+    color: white;
+    text-transform: none;
+}
+
+.dropdown-content li a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+

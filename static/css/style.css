@@ -1,0 +1,105 @@
+body {
+    background-color: white;
+    background-size: cover; /* Зробити фон заповнюючим */
+    background-position: center; /* Центрувати зображення */
+    background-repeat: no-repeat; /* Не повторювати зображення */
+    min-height: 100vh; /* Мінімальна висота для заповнення екрана */
+}
+h2{
+    color: white;
+}
+        h1 {
+            color: #5c6bc0;
+            font-size: 4rem;  /* Зробимо заголовок більшим */
+            text-align: center;
+            margin-top: 50px;
+            font-family: 'Poppins', sans-serif; /* Встановимо гарний шрифт Poppins */
+            font-weight: bold; /* Товстий шрифт */
+        }
+.lil{
+    color: white;
+    font-size: 32px;
+}
+table{
+    background-color: #9567E0FF;
+    color: black;
+    font-size: 14px;
+    border-radius: 10px;
+    opacity: 90%;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #9567e0;
+    border-radius: 10px;
+}
+.well{
+    background-color: #9567e0;
+    border-radius: 10px;
+    opacity: 80%;
+}
+.container{
+    justify-content: center;
+}
+#flash-messages {
+    position: fixed;
+    top: 40px;
+    left: 10%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 200px;
+    text-align: center;
+}
+
+.flash {
+    padding: 13px;
+    margin-bottom: 10px;
+    color: #fff;
+    border-radius: 8px;
+    animation: fadeInOut 2s ease forwards;
+    opacity: 1;
+}
+
+.flash.info{
+    background-color: #5cb85c;
+}
+
+.flash.error{
+    background-color: #e82626;
+}
+
+.alert-success {
+    background-color: #5cb85c;
+}
+
+.alert-danger {
+    background-color: #d9534f;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        display: none;
+        z-index: -5;
+        transform: translateX(-400px);
+    }
+}
+
+.table-responsive-scroll {
+    max-height: 550px; /* Adjust the height as needed */
+    overflow-y: auto;
+    margin-top: 20px;
+}
+#h2List{
+    color: black;
+}
