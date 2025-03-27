@@ -1704,7 +1704,7 @@ def update_сontestant():
 
         cur = mysql.connection.cursor()
         cur.execute("""
-            UPDATE Contestant  
+            UPDATE contestant  
             SET name=%s, surname=%s, city=%s, age=%s
             WHERE contestant_id=%s
         """, (name, surname, city, age, worker_id))
