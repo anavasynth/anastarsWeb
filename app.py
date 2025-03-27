@@ -6,10 +6,10 @@ import re
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
-app.config['MYSQL_HOST'] = 'yamanote.proxy.rlwy.net'
-app.config['MYSQL_PORT'] = 29037  # Порт
+app.config['MYSQL_HOST'] = 'switchback.proxy.rlwy.net'
+app.config['MYSQL_PORT'] = 10164  # Порт
 app.config['MYSQL_USER'] = 'root'  # Ім'я користувача
-app.config['MYSQL_PASSWORD'] = 'GSwseONOBwuYZvQpnyKSpWnLvHZeEDIQ'  # Пароль
+app.config['MYSQL_PASSWORD'] = 'FLaJrEmwhXQVKejMWiihnrOHhbLRxWkh'  # Пароль
 app.config['MYSQL_DB'] = 'railway'  # Назва бази даних
 
 mysql = MySQL(app)
