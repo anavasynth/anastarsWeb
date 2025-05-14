@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>VVVV</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="{{url_for('static', filename= 'css/sidebar.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename= 'css/style.css')}}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 </head>
 
-
 <nav>
-                                     {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <div id="flash-messages">
             {% for category, message in messages %}
@@ -21,7 +19,7 @@
             {% endfor %}
         </div>
     {% endif %}
-{% endwith %}
+    {% endwith %}
     <a href="#" id="logo">Anastars</a>
     <ul>
         <li><a href="{{ url_for('Index') }}">Головна</a></li>
@@ -47,13 +45,11 @@
     </ul>
 </nav>
 
-
 <body>
-
 <div class="container mt-5">
     <h1 class="text-center mb-4">Адмін панель - Додати користувача</h1>
 
-    {% if session['access_right'] == 'owner' or session['access_right'] == 'administrator' %}
+    {% if role == 'owner' or role == 'administrator' %}
         <!-- Form for adding a new user -->
         <form method="POST" action="{{ url_for('add_user') }}" class="border p-4 mb-4 bg-light">
             <div class="form-group">
@@ -82,7 +78,7 @@
     {% endif %}
 
     <!-- Displaying the users table if the user is an owner -->
-    {% if session['access_right'] == 'owner' %}
+    {% if role == 'owner' %}
         <h2 class="mt-4">User List</h2>
         <table class="table table-striped">
             <thead>
@@ -97,70 +93,66 @@
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td>{{ user[0] }}</td>
-                        <td>{{ user[1] }}</td>
-                        <td>{{ user[2] }}</td>
-                        <td>{{ user[3] }}</td>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.login }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>{{ user.access_right }}</td>
                         <td>
-                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal{{ user[0] }}">Edit</button>
-                            <a href="{{ url_for('delete_user', user_id=user[0]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal{{ user.id }}">Edit</button>
+                            <a href="{{ url_for('delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                         </td>
                     </tr>
 
-<!-- Modal for Editing User -->
-<div id="editUserModal{{ user[0] }}" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ url_for('update_user', user_id=user[0]) }}" method="POST">
-                    <input type="hidden" name="user_id" value="{{ user[0] }}">
+                    <!-- Modal for Editing User -->
+                    <div id="editUserModal{{ user.id }}" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit User</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ url_for('update_user', user_id=user.id) }}" method="POST">
+                                        <input type="hidden" name="user_id" value="{{ user.id }}">
 
-                    <!-- Поле для зміни логіна -->
-                    <div class="form-group">
-                        <label for="login">Login:</label>
-                        <input type="text" class="form-control" name="login" value="{{ user[1] }}" required>
+                                        <!-- Поле для зміни логіна -->
+                                        <div class="form-group">
+                                            <label for="login">Login:</label>
+                                            <input type="text" class="form-control" name="login" value="{{ user.login }}" required>
+                                        </div>
+
+                                        <!-- Поле для зміни пароля -->
+                                        <div class="form-group">
+                                            <label for="password">New Password:</label>
+                                            <input type="password" class="form-control" name="password" placeholder="Enter new password">
+                                            <small class="form-text text-muted">Leave blank to keep the current password.</small>
+                                        </div>
+
+                                        <!-- Поле для зміни прав доступу -->
+                                        <div class="form-group">
+                                            <label for="access_right">Access Right:</label>
+                                            <select name="access_right" class="form-control" required>
+                                                {% for allowed_role in allowed_roles %}
+                                                    <option value="{{ allowed_role }}" {% if user.access_right == allowed_role %}selected{% endif %}>{{ allowed_role }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Update User</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!-- Поле для зміни пароля -->
-                    <div class="form-group">
-                        <label for="password">New Password:</label>
-                        <input type="password" class="form-control" name="password" placeholder="Enter new password">
-                        <small class="form-text text-muted">Leave blank to keep the current password.</small>
-                    </div>
-
-                    <!-- Поле для зміни прав доступу -->
-                    <div class="form-group">
-                        <label for="access_right">Access Right:</label>
-                        <select name="access_right" class="form-control" required>
-                            <option value="administrator" {% if user[2] == 'administrator' %}selected{% endif %}>Administrator</option>
-                            <option value="operator" {% if user[2] == 'operator' %}selected{% endif %}>Operator</option>
-                            <option value="guest" {% if user[2] == 'guest' %}selected{% endif %}>Guest</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Update User</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
 </div>
-
-
-
 </body>
 </html>
